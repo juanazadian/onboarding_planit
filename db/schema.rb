@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2021_08_11_133651) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
@@ -40,25 +43,27 @@ ActiveRecord::Schema.define(version: 2021_08_11_133651) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.string "img"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "img"
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.float "cost"
-    t.integer "provider_id", null: false
+    t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "img"
+    t.index ["name"], name: "index_products_on_name", unique: true
     t.index ["provider_id"], name: "index_products_on_provider_id"
   end
 
   create_table "providers", force: :cascade do |t|
     t.string "name"
-    t.integer "category_id", null: false
+    t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "img"
@@ -68,6 +73,7 @@ ActiveRecord::Schema.define(version: 2021_08_11_133651) do
     t.string "opening_time"
     t.string "closing_time"
     t.index ["category_id"], name: "index_providers_on_category_id"
+    t.index ["name"], name: "index_providers_on_name", unique: true
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -82,8 +88,8 @@ ActiveRecord::Schema.define(version: 2021_08_11_133651) do
     t.string "payment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
-    t.integer "product_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
     t.index ["product_id"], name: "index_purchases_on_product_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
