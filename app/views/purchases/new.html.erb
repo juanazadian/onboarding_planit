@@ -1,0 +1,156 @@
+<%= render 'home/header' %>
+<main class="container-fluid bg-tertiary">
+  <section class="row justify-content-center">
+    <section class="card col-8 p-5 rounded-0">
+      <div class="card-body p-5">
+        <div class="row justify-content-center">
+          <div class="col-9 col-xxl-7">
+            <h2>Resumen</h2>
+            <%= form_with(model: Purchase.new) do |f| %>
+              <div class="col-10 card border-light border-0 border-bottom shadow-none rounded-0 my-2 p-0">
+                <div class="card-body p-0 pb-3">
+                  <p class="fs-4 text-secondary mt-3 mb-2"><b>S E R V I C I O</b></p>
+                  <div class="row d-flex justify-content-start align-items-center">
+                    <div class="col-3 col-xxl-2">
+                      <%= image_tag @purchase.product.provider.img, class: "img-fluid rounded-3" %>
+                    </div>
+                    <div class="col-8">
+                      <p class="text-body fs-4 m-0 mt-2"><b><%= @purchase.product.provider.name %></b></p>
+                      <% if @purchase.product.provider.delivery %>
+                        <div class="col-12">
+                          <div class="row m-0 mx-1 fs-6">
+                            <div class="col-1 p-0">
+                              <i class="fas fa-truck fa-sm text-primary"></i>
+                            </div>
+                            <div class="col-10 p-0">
+                              <p class="fs-6">Entrega a domicilio</p>
+                            </div>
+                          </div>
+                        </div>
+                      <% else %>
+                          <div class="row m-0 mx-2">
+                            <div class="row d-flex no-gutters p-0">
+                              <div class="col-10 p-0">
+                                <p class="fs-6 mx-1 text-secondary">Retiro en el local</p>
+                              </div>
+                            </div>
+                          </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="row mt-2 d-flex justify-content-between px-2">
+                    <div class="col-10 p-0 pt-2">
+                      <p class="fs-5 m-0"><b><%= @purchase.product.name %></b></p>
+                      <p class="fs-6 text-secondary m-0"><%= @purchase.quantity %>&nbsp;invitados</p>
+                    </div>
+                    <div class="col-1 p-0">
+                      <i class="fas fa-pen fa-sm text-darky"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-10 card border-light border-0 border-bottom shadow-none rounded-0 my-2 p-0">
+                <div class="card-body p-0 pb-3">
+                  <div class="row mt-2 d-flex justify-content-between px-2">
+                    <div class="col-10 p-0 pt-2">
+                      <p class="fs-4 text-secondary"><b>D E T A L L E S &nbsp; D E &nbsp; L A &nbsp; E N T R E G A</b></p>
+                    </div>
+                    <div class="col-1 p-0">
+                      <i class="fas fa-pen fa-sm text-darky"></i>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-start px-3">
+                    <div class="col-1 p-0">
+                      <i class="fas fa-map-marker-alt fa-sm text-darky"></i>
+                    </div>
+                    <div class="col-10 p-0 pt-2">
+                      <p class="fs-5"><%= @purchase.address %></p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-start px-3">
+                    <div class="col-1 p-0">
+                      <i class="far fa-calendar-alt fa-sm text-darky"></i>
+                    </div>
+                    <div class="col-10 p-0 pt-2">
+                      <p class="fs-5"><%= @purchase.date.strftime("%A, %d of %B") if @purchase.date%></p>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-start px-3">
+                    <div class="col-1 p-0">
+                      <i class="fas fa-clock fa-sm text-darky"></i>
+                    </div>
+                    <div class="col-10 p-0 pt-2">
+                      <p class="fs-5">De <%= @purchase.start_time.strftime("%k.%M") if @purchase.start_time %> a <%= @purchase.end_time.strftime("%k.%M") if @purchase.end_time %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-10 card border-light border-0 border-bottom shadow-none rounded-0 my-2 p-0">
+                <div class="card-body p-0 pb-3">
+                  <p class="fs-4 text-secondary mt-3 mb-2"><b>M É T O D O &nbsp; D E &nbsp; P A G O</b></p>
+
+                  <ul class="list-group" id="cards">
+                    <li class="list-group-item">
+                      <div class="row d-flex justify-content-between">
+                        <div class="col-10 p-0 px-2">
+                          <%= f.radio_button :payment, "", autocomplete: "off" %>
+                          <%= f.label :payment, "9174", class: "fs-4 " %>
+                        </div>
+                        <div class="col-1 p-0">
+                          <i class="fas fa-pen fa-xs text-darky"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <button type="button" class="text-secondary btn btn-light fs-5 p-0" data-bs-toggle="modal" data-bs-target="#exampleModal">+&nbsp;Agregar otra tarjeta</button>
+                </div>
+              </div>
+              <div class="col-9 mt-5">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-4">
+                    <p class="fs-3"><b>Total</b></p>
+                  </div>
+                  <div class="col-4">
+                    <h3><b>$<%= @total %></b></h3>
+                  </div>
+                </div>
+              </div>
+
+                <%= f.hidden_field :quantity, value: @purchase.quantity %>
+                <%= f.hidden_field :product_id, value: @purchase.product.id %>
+                <%= f.hidden_field :address, value: @purchase.address %>
+                <%= f.hidden_field :apartment, value: @purchase.apartment %>
+                <%= f.hidden_field :date, value: @purchase.date %>
+                <%= f.hidden_field :start_time, value: @purchase.start_time %>
+                <%= f.hidden_field :end_time, value: @purchase.end_time %>
+                <%= f.hidden_field :comments, value: @purchase.comments %>
+
+              <div class="actions mt-3">
+                <%= f.submit "¡Comprar!", class: "main-button button-size-xlarge text-dark fs-4" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Añadir una tarjeta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-input-box fs-4 p-2 text-secondary" id="cardnum" name="cardnum" required minlength="16" maxlength="18" size="10">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary fs-5" id="savebtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
