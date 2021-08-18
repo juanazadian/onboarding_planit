@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   def index
     @providers = []
     @categories = Category.all
-    if params[:category]
-      @providers = Provider.where(category_id: params[:category].to_i)
-    else
-      @providers = Provider.all
-    end
+    @providers = if params[:category]
+                   Provider.where(category_id: params[:category].to_i)
+                 else
+                   Provider.all
+                 end
   end
 end

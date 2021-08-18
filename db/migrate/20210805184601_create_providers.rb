@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateProviders < ActiveRecord::Migration[6.1]
   def change
     create_table :providers do |t|
@@ -7,6 +9,6 @@ class CreateProviders < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :providers, :name,                unique: true
+    add_index :providers, :name, unique: true
   end
 end
