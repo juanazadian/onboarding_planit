@@ -1,38 +1,42 @@
 <%= render 'home/header' %>
-<main class="container-fluid bg-tertiary full-page">
+<main class="container-fluid bg-tertiary min-vh-100">
   <section class="row justify-content-center">
-    <section class="card col-8 p-0 rounded-0 full-page">
+    <section class="card col-8 p-0 rounded-0 min-vh-100">
       <%= image_tag @product.img, class: "h-25 card-img-top rounded-0 object-fit-cover" %>
       <div class="card-body p-4">
         <h4><b><%= @product.name %></b></h4>
-        <p class="fs-6 my-3"><%= @product.description %></p>
-        <p class="text-body fs-3 m-0 mt-4"><b>$<span id="cost"><%= @product.cost.to_i %></span></b><span class="fs-6 text-gray">  x invitado</span></p>
+        <p class="fs-6 text-darky my-3"><%= @product.description %></p>
+        <p class="text-body fs-3 m-0 mt-4"><b>$<span id="cost"><%= @product.cost.to_i %></span></b><span class="fs-6 text-darky">  x invitado</span></p>
         <div class="col-12 card border-light border-0 border-top rounded-0 shadow-none my-4 p-0">
-          <div class="card-body d-flex justify-content-between px-0">
-            <div class="col-2">
-              <p class="text-body fs-4 m-0">I N V I T A D O S</p>
-              <div class="def-number-input number-input my-3">
-                <input class="quantity" min="0" name="quantity" value="1" type="number" id="invitados">
-                <button id="downbtn" class="minus"></button>
-                <button id="upbtn" class="plus"></button>
+          <div class="card-body p-0 py-4">
+            <div class="col-4 col-xl-2">
+              <p class="text-darky fs-4 m-0">I N V I T A D O S</p>
+            </div>
+            <div class="row d-flex justify-content-start my-3">
+              <div class="col-2 btn btn-outline-darky px-3 mx-3">
+                <input class="quantity mw-100 text-darky border-0 text-center" min="0" name="quantity" value="1" type="number" id="invitados">
+              </div>
+              <div class="col-2 btn-group">
+                <button id="downbtn" class="btn btn-outline-darky minus">-</button>
+                <button id="upbtn" class="btn btn-outline-darky plus">+</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-6 col-xxl-4 mt-5">
-          <div class="row d-flex justify-content-between ">
-            <div class="col-4 mx-4">
+        <div class="col-11 col-lg-8 mx-2 col-xl-6 col-xxl-5 mt-5">
+          <div class="row d-flex justify-content-between">
+            <div class="col-4 text-start">
               <h4>Total</h4>
             </div>
-            <div class="col-4">
+            <div class="col-4 text-end">
               <h4><b>$<span id="total"><%= @product.cost.to_i %></span></b></h4>
             </div>
           </div>
           <div class="row d-flex justify-content-between">
-            <div class="col-5 main-button button-size-medium bg-white text-dark text-center fs-4 shadow m-4 p-3">
+            <div class="col-5 main-button button-size-medium bg-white text-dark text-center fs-4 shadow my-4 mx-2 p-3">
               Agregar a lista
             </div>
-            <div class="col-5 main-button button-size-medium text-dark text-center fs-4 m-4 p-3">
+            <div class="col-5 main-button button-size-medium text-dark text-center fs-4 my-4 mx-2 p-3">
               <p class="d-none" id="productid"><%=@product.id%></p>
               <a id="comprar" href="" class="text-decoration-none">
                 <b>Comprar</b>
